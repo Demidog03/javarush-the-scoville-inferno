@@ -27,4 +27,12 @@ export default class AuthController {
             message: 'User registered successfully',
         })
     }
+
+    async me({ auth, response }: HttpContext) {
+        await auth.check()
+        
+        response.ok({
+            user: auth.user
+        })
+    }
 }
