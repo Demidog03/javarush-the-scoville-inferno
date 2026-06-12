@@ -38,8 +38,7 @@ export class LoginPage {
     .subscribe({
       next: (response) => {
         if (response) {
-          // TODO: TEMP - /test поменять на главную страницу
-          this.router.navigateByUrl('/test')
+          this.router.navigateByUrl('/')
         }
       }
     })
