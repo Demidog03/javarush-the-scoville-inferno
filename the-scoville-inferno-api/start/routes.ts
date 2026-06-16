@@ -9,6 +9,7 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
+import { RolesEnum } from '#enums/role_enums'
 const ProductsController = () => import('#controllers/products_controller')
 const HeatLevelsController = () => import('#controllers/heat_levels_controller')
 const CategoriesController = () => import('#controllers/categories_controller')
@@ -57,3 +58,20 @@ router
         .prefix('/products'))
   })
   .prefix('/api/v1')
+
+// Admin router
+router
+  .group(() => {
+    router
+      .group(() => {
+        router.get('/', [ProductsController, 'adminIndex'])
+        router.post('/', [ProductsController, 'adminStore'])
+        router.post('/upload-image', [ProductsController, 'adminUploadImage'])
+        router.get('/:id', [ProductsController, 'adminShow'])
+        router.patch('/:id', [ProductsController, 'adminUpdate'])
+        router.delete('/:id', [ProductsController, 'adminDestroy'])
+      })
+      .prefix('/products')
+  })
+  .prefix('/api/v1/admin')
+  .use([middleware.auth({ guards: ['api'] }), middleware.role([RolesEnum.ADMIN])])

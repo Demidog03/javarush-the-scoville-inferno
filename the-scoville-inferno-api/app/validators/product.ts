@@ -34,3 +34,33 @@ export const productsIndexValidator = vine.compile(
     order: vine.enum(['asc', 'desc']).optional(),
   })
 )
+
+export const createProductValidator = vine.compile(
+  vine.object({
+    name: vine.string().trim().minLength(2).maxLength(255),
+    description: vine.string().trim().maxLength(5000).nullable().optional(),
+    price: vine.number().min(0),
+    imageUrl: vine.string().trim().maxLength(2048).nullable().optional(),
+    scoville: vine.number().min(0).optional(),
+    inStock: vine.boolean().optional(),
+    isActive: vine.boolean().optional(),
+    categoryId: vine.number().min(1),
+    brandId: vine.number().min(1).nullable().optional(),
+    heatLevelId: vine.number().min(1).nullable().optional(),
+  })
+)
+
+export const updateProductValidator = vine.compile(
+  vine.object({
+    name: vine.string().trim().minLength(2).maxLength(255).optional(),
+    description: vine.string().trim().maxLength(5000).nullable().optional(),
+    price: vine.number().min(0).optional(),
+    imageUrl: vine.string().trim().maxLength(2048).nullable().optional(),
+    scoville: vine.number().min(0).optional(),
+    inStock: vine.boolean().optional(),
+    isActive: vine.boolean().optional(),
+    categoryId: vine.number().min(1).optional(),
+    brandId: vine.number().min(1).nullable().optional(),
+    heatLevelId: vine.number().min(1).nullable().optional(),
+  })
+)
