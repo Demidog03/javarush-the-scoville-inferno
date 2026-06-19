@@ -14,8 +14,8 @@ const ProductsController = () => import('#controllers/products_controller')
 const HeatLevelsController = () => import('#controllers/heat_levels_controller')
 const CategoriesController = () => import('#controllers/categories_controller')
 const BrandsController = () => import('#controllers/brands_controller')
-
 const AuthController = () => import('#controllers/auth_controller')
+const ProfilesController = () => import('#controllers/profiles_controller')
 
 router
   .get('/', async () => {
@@ -28,7 +28,7 @@ router
 // AUTH ROUTES
 router
   .group(() => {
-    ; ((((router
+    ; (((((router
       .group(() => {
         router.post('/login', [AuthController, 'login'])
         router.post('/register', [AuthController, 'register'])
@@ -55,7 +55,12 @@ router
           router.get('/', [ProductsController, 'index'])
           router.get('/:id', [ProductsController, 'show'])
         })
-        .prefix('/products'))
+        .prefix('/products')),
+      router
+        .group(() => {
+          router.patch('/', [ProfilesController, 'update'])
+        })
+        .prefix('/profile'))
   })
   .prefix('/api/v1')
 
