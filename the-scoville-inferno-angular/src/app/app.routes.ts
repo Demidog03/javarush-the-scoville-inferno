@@ -13,6 +13,7 @@ import { ProductsPage } from './pages/products-page/products-page';
 import { ProductDetailsPage } from './pages/product-details-page/product-details-page';
 import { AdminProductFormPage } from './pages/admin/admin-product-form-page/admin-product-form-page';
 import { AccountPage } from './pages/account-page/account-page';
+import { CartPage } from './pages/cart-page/cart-page';
 
 export const routes: Routes = [
     {
@@ -53,6 +54,10 @@ export const routes: Routes = [
                   component: ProductDetailsPage
                 }
               ]
+            },
+            {
+              path: 'cart',
+              component: CartPage
             },
             {
               path: 'account',

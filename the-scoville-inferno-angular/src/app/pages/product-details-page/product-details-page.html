@@ -54,13 +54,17 @@
         <p class="detail-description">{{ product.description }}</p>
         }
 
-        <button
-            pButton
-            class="add-to-cart"
-            label="Add to Cart"
-            severity="danger"
-            [disabled]="!product.inStock"
-        ></button>
+        @if(!isProductInCart()) {
+        <button pButton type="button" class="add-to-cart" label="Add to Cart" icon="pi pi-shopping-cart"
+            severity="primary" [disabled]="!product.inStock || addingToCart()" [loading]="addingToCart()"
+            (click)="addToCart()"></button>
+        }
+        @else {
+            <button pButton type="button" class="add-to-cart" label="Remove from Cart" icon="pi pi-shopping-cart"
+            severity="danger" [disabled]="!product.inStock || addingToCart()" [loading]="addingToCart()"
+            (click)="removeFromCart()"></button>
+        }
+
         @if (!product.inStock) {
         <p class="stock-note">Товара нет в наличии</p>
         }
