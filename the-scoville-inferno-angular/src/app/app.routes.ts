@@ -14,75 +14,86 @@ import { ProductDetailsPage } from './pages/product-details-page/product-details
 import { AdminProductFormPage } from './pages/admin/admin-product-form-page/admin-product-form-page';
 import { AccountPage } from './pages/account-page/account-page';
 import { CartPage } from './pages/cart-page/cart-page';
+import { CheckoutPage } from './pages/checkout-page/checkout-page';
+import { OrderSuccessPage } from './pages/order-success-page/order-success-page';
 
 export const routes: Routes = [
-    {
+  {
+    path: '',
+    component: MainLayout,
+    children: [
+      {
         path: '',
-        component: MainLayout,
+        redirectTo: '/products',
+        pathMatch: 'full'
+      },
+      {
+        path: 'login',
+        component: LoginPage,
+        canActivate: [guestGuard]
+      },
+      {
+        path: 'register',
+        component: RegisterPage,
+        canActivate: [guestGuard]
+      },
+      {
+        path: 'test',
+        component: TestPage,
+        canActivate: [authGuard]
+      },
+      {
+        path: 'products',
+        component: RouterOutletShell,
+        canActivate: [authGuard],
         children: [
-            {
-              path: '',
-              redirectTo: '/products',
-              pathMatch: 'full'
-            },
-            {
-                path: 'login',
-                component: LoginPage,
-                canActivate: [guestGuard]
-            },
-            {
-                path: 'register',
-                component: RegisterPage,
-                canActivate: [guestGuard]
-            },
-            {
-                path: 'test',
-                component: TestPage,
-                canActivate: [authGuard]
-            },
-            {
-              path: 'products',
-              component: RouterOutletShell,
-              canActivate: [authGuard],
-              children: [
-                {
-                  path: '',
-                  component: ProductsPage
-                },
-                {
-                  path: ':id',
-                  component: ProductDetailsPage
-                }
-              ]
-            },
-            {
-              path: 'cart',
-              component: CartPage
-            },
-            {
-              path: 'account',
-              component: AccountPage,
-              canActivate: [authGuard]
-            },
-            {
-              path: 'admin',
-              component: RouterOutletShell,
-              canActivate: [authGuard, roleGuard([RolesEnum.ADMIN])],
-              children: [
-                {
-                  path: 'products',
-                  component: AdminProductsPage
-                },
-                {
-                  path: 'products/new',
-                  component: AdminProductFormPage
-                },
-                {
-                  path: 'products/:id/edit',
-                  component: AdminProductFormPage
-                }
-              ]
-            }
+          {
+            path: '',
+            component: ProductsPage
+          },
+          {
+            path: ':id',
+            component: ProductDetailsPage
+          }
         ]
-    }
+      },
+      {
+        path: 'cart',
+        component: CartPage
+      },
+      {
+        path: 'account',
+        component: AccountPage,
+        canActivate: [authGuard]
+      },
+      {
+        path: 'checkout',
+        component: CheckoutPage,
+        canActivate: [authGuard]
+      },
+      {
+        path: 'order-success',
+        component: OrderSuccessPage
+      },
+      {
+        path: 'admin',
+        component: RouterOutletShell,
+        canActivate: [authGuard, roleGuard([RolesEnum.ADMIN])],
+        children: [
+          {
+            path: 'products',
+            component: AdminProductsPage
+          },
+          {
+            path: 'products/new',
+            component: AdminProductFormPage
+          },
+          {
+            path: 'products/:id/edit',
+            component: AdminProductFormPage
+          }
+        ]
+      }
+    ]
+  }
 ];
